@@ -11,6 +11,20 @@ class AuthService
     $this->client = \Config\Services::curlrequest();
   }
 
+  public function apiRegister($email, $first_name, $last_name, $password)
+  {
+    $response = $this->client->post('https://take-home-test-api.nutech-integrasi.com/register', [
+      'form_params' => [
+        'email' => $email,
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'password' => $password
+      ]
+    ]);
+
+    return json_decode($response->getBody(), true);
+  }
+
   public function apiLogin($email, $password)
   {
     $response = $this->client->post('https://take-home-test-api.nutech-integrasi.com/login', [

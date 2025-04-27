@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Services\AuthService;
+use App\Validations\AuthValidation;
 use Exception;
 
 class Auth extends BaseController
@@ -16,32 +17,41 @@ class Auth extends BaseController
 
     public function registerProcess()
     {
-        $email = $this->request->getPost('email');
-        $first_name = $this->request->getPost('first_name');
-        $last_name = $this->request->getPost('last_name');
-        $password = $this->request->getPost('password');
+        // $email = $this->request->getPost('email');
+        // $first_name = $this->request->getPost('first_name');
+        // $last_name = $this->request->getPost('last_name');
+        // $password = $this->request->getPost('password');
 
-        $client = \Config\Services::curlrequest();
-
-        try {
-            $response = $client->post('https://take-home-test-api.nutech-integrasi.com/registration', [
-                'form_params' => [
-                    'email' => $email,
-                    'first_name' => $first_name,
-                    'last_name' => $last_name,
-                    'password' => $password
-                ]
-            ]);
-
-            $data = json_decode($response->getBody(), true);
-
-            if ($data['status'] !== 0) {
-                return redirect()->back()->with('error', $data['message']);
-            }
-            return redirect()->to('/login')->with('success', 'Registration successful. Please log in.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Registration failed. Please try again: ' . $e->getMessage());
+        $rules = AuthValidation::registerRules();
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
+
+        $input = $this->request->getPost();
+        unset($input['password_confirmation']);
+        return redirect()->to('/login')->with('success', 'Registration successful, please log in. ' . $input);
+
+        // $client = \Config\Services::curlrequest();
+
+        // try {
+        //     $response = $client->post('https://take-home-test-api.nutech-integrasi.com/registration', [
+        //         'form_params' => [
+        //             'email' => $email,
+        //             'first_name' => $first_name,
+        //             'last_name' => $last_name,
+        //             'password' => $password
+        //         ]
+        //     ]);
+
+        //     $data = json_decode($response->getBody(), true);
+
+        //     if ($data['status'] !== 0) {
+        //         return redirect()->back()->with('error', $data['message']);
+        //     }
+        //     return redirect()->to('/login')->with('success', 'Registration successful. Please log in.');
+        // } catch (Exception $e) {
+        //     return redirect()->back()->with('error', 'Registration failed. Please try again: ' . $e->getMessage());
+        // }
     }
 
     public function login()
