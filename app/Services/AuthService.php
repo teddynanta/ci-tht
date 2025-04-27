@@ -8,43 +8,70 @@ class AuthService
 
   public function __construct()
   {
-    $this->client = \Config\Services::curlrequest();
+    $this->client = \Config\Services::curlrequest([
+      'timeout' => 5,
+    ]);
   }
 
   public function apiRegister($email, $first_name, $last_name, $password)
   {
-    $response = $this->client->post('https://take-home-test-api.nutech-integrasi.com/register', [
-      'form_params' => [
-        'email' => $email,
-        'first_name' => $first_name,
-        'last_name' => $last_name,
-        'password' => $password
-      ]
-    ]);
+    try {
+      $response = $this->client->post('https://take-home-test-api.nutech-integrasi.com/registration', [
+        'form_params' => [
+          'email' => $email,
+          'first_name' => $first_name,
+          'last_name' => $last_name,
+          'password' => $password
+        ],
+        'http_errors' => false,
+      ]);
 
-    return json_decode($response->getBody(), true);
+      return json_decode($response->getBody(), true);
+    } catch (\Exception $e) {
+      return [
+        'status' => 500,
+        'message' => 'Login API error: ' . $e->getMessage(),
+        'data' => null,
+      ];
+    }
   }
 
   public function apiLogin($email, $password)
   {
-    $response = $this->client->post('https://take-home-test-api.nutech-integrasi.com/login', [
-      'form_params' => [
-        'email' => $email,
-        'password' => $password
-      ]
-    ]);
-
-    return json_decode($response->getBody(), true);
+    try {
+      $response = $this->client->post('https://take-home-test-api.nutech-integrasi.com/login', [
+        'form_params' => [
+          'email' => $email,
+          'password' => $password
+        ],
+        'http_errors' => false,
+      ]);
+      return json_decode($response->getBody(), true);
+    } catch (\Exception $e) {
+      return [
+        'status' => 500,
+        'message' => 'Login API error: ' . $e->getMessage(),
+        'data' => null,
+      ];
+    }
   }
 
   public function getProfile($token)
   {
-    $response = $this->client->get('https://take-home-test-api.nutech-integrasi.com/profile', [
-      'headers' => [
-        'Authorization' => 'Bearer ' . $token,
-      ]
-    ]);
+    try {
+      $response = $this->client->get('https://take-home-test-api.nutech-integrasi.com/profile', [
+        'headers' => [
+          'Authorization' => 'Bearer ' . $token,
+        ]
+      ]);
 
-    return json_decode($response->getBody(), true);
+      return json_decode($response->getBody(), true);
+    } catch (\Exception $e) {
+      return [
+        'status' => 500,
+        'message' => 'Login API error: ' . $e->getMessage(),
+        'data' => null,
+      ];
+    }
   }
 }

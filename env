@@ -66,4 +66,4 @@ CI_ENVIRONMENT = development
 # LOGGER
 #--------------------------------------------------------------------
 
-logger.threshold = 9
+logger.threshold = 4

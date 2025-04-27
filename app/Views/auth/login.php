@@ -1,11 +1,12 @@
 <?php
 require_once(APPPATH . 'Views/components/icons.php');
+$errors = session()->getFlashdata('error_validations') ?? [];
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-  <title>Register</title>
+  <title>Login</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
@@ -34,8 +35,19 @@ require_once(APPPATH . 'Views/components/icons.php');
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                 <?php renderIcon('mail', 'form-icon w-4 h-4 text-gray-900 dark:text-gray-400'); ?>
               </div>
-              <input type="email" name="email" id="email" autocomplete="email" required class="form-input block w-full rounded-md bg-white ps-9 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                autocomplete="email"
+                required
+                value="<?= old('email') ?>"
+                class="form-input border <?= isset($errors['email']) ? 'border-red-500' : 'border-gray-300' ?> block w-full rounded-md bg-white ps-9 px-3 py-2 text-base text-gray-900 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600 sm:text-sm"
+                placeholder="masukan email anda">
             </div>
+            <?php if (isset($errors['email'])): ?>
+              <small class="text-red-600"><?= esc($errors['email']) ?></small>
+            <?php endif; ?>
           </div>
 
           <div>
@@ -47,7 +59,14 @@ require_once(APPPATH . 'Views/components/icons.php');
                 <?php renderIcon('lock', 'form-icon w-4 h-4 text-gray-900 dark:text-gray-400'); ?>
 
               </div>
-              <input type="password" name="password" id="password" autocomplete="current-password" required class="form-input ps-9 block w-full rounded-md bg-white px-3 py-1.5 pr-10 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                autocomplete="current-password"
+                required
+                class="fform-input border <?= isset($errors['password']) ? 'border-red-500' : 'border-gray-300' ?> block w-full rounded-md bg-white ps-9 px-3 py-2 text-base text-gray-900 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600 sm:text-sm"
+                placeholder="masukan password anda">
 
               <!-- Eye Icon -->
               <div class="absolute inset-y-0 end-0 flex items-center pe-3">
@@ -59,6 +78,9 @@ require_once(APPPATH . 'Views/components/icons.php');
                 </button>
               </div>
             </div>
+            <?php if (isset($errors['password'])): ?>
+              <small class="text-red-600"><?= esc($errors['password']) ?></small>
+            <?php endif; ?>
           </div>
 
           <div>
