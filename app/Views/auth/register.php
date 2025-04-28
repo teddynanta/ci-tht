@@ -1,7 +1,6 @@
 <?php
 require_once(APPPATH . 'Views/components/icons.php');
 
-// Ambil errors, pastikan array kosong kalau tidak ada
 $errors = session()->getFlashdata('error_validations') ?? [];
 ?>
 
@@ -35,7 +34,7 @@ $errors = session()->getFlashdata('error_validations') ?? [];
             <label for="email" class="block text-sm font-medium text-gray-900">Email address</label>
             <div class="relative mt-2">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <?php renderIcon('mail', 'form-icon w-4 h-4 text-gray-900 dark:text-gray-400'); ?>
+                <?php renderIcon('mail', 'form-icon w-4 h-4 text-gray-400'); ?>
               </div>
               <input
                 type="email"
@@ -57,7 +56,7 @@ $errors = session()->getFlashdata('error_validations') ?? [];
             <label for="first_name" class="block text-sm font-medium text-gray-900">First Name</label>
             <div class="relative mt-2">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <?php renderIcon('user', 'form-icon w-4 h-4 text-gray-900 dark:text-gray-400'); ?>
+                <?php renderIcon('user', 'form-icon w-4 h-4 text-gray-400'); ?>
               </div>
               <input
                 type="text"
@@ -78,7 +77,7 @@ $errors = session()->getFlashdata('error_validations') ?? [];
             <label for="last_name" class="block text-sm font-medium text-gray-900">Last Name</label>
             <div class="relative mt-2">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <?php renderIcon('user', 'form-icon w-4 h-4 text-gray-900 dark:text-gray-400'); ?>
+                <?php renderIcon('user', 'form-icon w-4 h-4 text-gray-400'); ?>
               </div>
               <input
                 type="text"
@@ -99,7 +98,7 @@ $errors = session()->getFlashdata('error_validations') ?? [];
             <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
             <div class="relative mt-2">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <?php renderIcon('lock', 'form-icon w-4 h-4 text-gray-900 dark:text-gray-400'); ?>
+                <?php renderIcon('lock', 'form-icon w-4 h-4 text-gray-400'); ?>
               </div>
               <input
                 type="password"

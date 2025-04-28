@@ -33,6 +33,29 @@ class DashboardService
     }
   }
 
+  public function topUp($token, $amount)
+  {
+    try {
+      $response = $this->client->get('https://take-home-test-api.nutech-integrasi.com/balance', [
+        'headers' => [
+          'Authorization' => 'Bearer ' . $token,
+        ],
+        'form_params' => [
+          'top_up_amount' => $amount,
+        ],
+        'http_errors' => false,
+      ]);
+
+      return json_decode($response->getBody(), true);
+    } catch (\Exception $e) {
+      return [
+        'status' => 500,
+        'message' => 'Get balance API error: ' . $e->getMessage(),
+        'data' => null,
+      ];
+    }
+  }
+
   public function getService($token)
   {
     try {

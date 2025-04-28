@@ -33,7 +33,7 @@ $errors = session()->getFlashdata('error_validations') ?? [];
             <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
             <div class="relative mt-2">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <?php renderIcon('mail', 'form-icon w-4 h-4 text-gray-900 dark:text-gray-400'); ?>
+                <?php renderIcon('mail', 'form-icon w-4 h-4 text-gray-400'); ?>
               </div>
               <input
                 type="email"
@@ -56,7 +56,7 @@ $errors = session()->getFlashdata('error_validations') ?? [];
             </div>
             <div class="relative mt-2">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <?php renderIcon('lock', 'form-icon w-4 h-4 text-gray-900 dark:text-gray-400'); ?>
+                <?php renderIcon('lock', 'form-icon w-4 h-4 text-gray-400'); ?>
 
               </div>
               <input

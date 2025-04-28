@@ -16,3 +16,4 @@ $routes->post('login', 'Auth::loginProcess');
 $routes->get('/dashboard', 'Dashboard::index');
 $routes->get('topup', 'Dashboard::topup');
 $routes->post('/logout', 'Auth::logout');
+$routes->post('topup', 'Dashboard::topUpProcess');

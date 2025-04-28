@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Services\DashboardService;
+use App\Validations\TransactionValidation;
 use CodeIgniter\HTTP\ResponseInterface;
 
 
@@ -49,6 +50,31 @@ class Dashboard extends BaseController
             ]);
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('errors', 'Gagal Topup: ' . $e->getMessage());
+        }
+    }
+
+    public function topUpProcess()
+    {
+        $token = session()->get('token');
+        $validation = \Config\Services::validation();
+        $rules = TransactionValidation::topUpRules();
+        $messages = TransactionValidation::topUpMessages();
+        if (!$this->validate($rules, $messages)) {
+            return redirect()->back()->withInput()->with('error_validations', $validation->getErrors());
+        }
+        $amount = $this->request->getPost();
+        try {
+            if ($amount['amount'] != 20000) {
+                return redirect()->to('/topup')->with('errors', $amount['amount']);
+            }
+            return redirect()->to('/topup')->with('success', 'Topup berhasil.');
+            // $result = $this->dashboardService->topUp($token, $amount['amount']);
+            // if ($result['status'] !== 0) {
+            //     return redirect()->to('/login')->with('errors', $result['message']);
+            // }
+            // return redirect()->to('/dashboard')->with('success', 'Topup berhasil.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('errors', 'Gagal: ' . $e->getMessage());
         }
     }
 }
