@@ -32,6 +32,22 @@ class Dashboard extends BaseController
                 'banners' => $resultBanner['data'],
             ]);
         } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('errors', 'Gagal: ' . $e->getMessage());
+        }
+    }
+
+    public function topup()
+    {
+        $token = session()->get('token');
+        try {
+            $resultBalance = $this->dashboardService->getBalance($token);
+            if ($resultBalance['status'] !== 0) {
+                return redirect()->to('/login')->with('errors', $resultBalance['message']);
+            }
+            return view('dashboard/topup', [
+                'balance' => $resultBalance['data']['balance'],
+            ]);
+        } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('errors', 'Gagal Topup: ' . $e->getMessage());
         }
     }

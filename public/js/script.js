@@ -7,6 +7,8 @@ const eyeClosed = document.getElementById('eyeClosed');
 const eyeOpenConfirmation = document.getElementById('eyeOpenConfirmation');
 const eyeClosedConfirmation = document.getElementById('eyeClosedConfirmation');
 const button = document.getElementById('toggleBalanceButton');
+const amount = document.getElementById('amount');
+const formatter = new Intl.NumberFormat('id-ID');
 
 document.querySelectorAll('.form-input').forEach(input => {
   const icon = input.parentElement.querySelector('.form-icon');
@@ -21,6 +23,15 @@ document.querySelectorAll('.form-input').forEach(input => {
     }
   })
 })
+
+if (amount) {
+  amount.addEventListener('input', function (e) {
+    let rawValue = this.value.replace(/\D/g, '');
+    let numberValue = parseInt(rawValue || '0', 10);
+    this.value = formatter.format(numberValue);
+  });
+  
+}
 
 if (togglePassword) {
   togglePassword.addEventListener('click', function() {

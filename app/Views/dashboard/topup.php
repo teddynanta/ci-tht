@@ -15,7 +15,7 @@ $photo = $photo[4];
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard HIS PPOB - Teddy Nanta</title>
+  <title>Top up HIS PPOB - Teddy Nanta</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
@@ -24,14 +24,16 @@ $photo = $photo[4];
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="relative flex h-16 items-center justify-between">
         <div class="flex flex-1 items-baseline justify-center px-5 sm:items-stretch sm:justify-between">
-          <a href="/dashboard" class="flex flex-row items-center">
-            <img class="h-8 w-auto" src="<?= base_url('/images/logo.png') ?>" alt="HIS PPOB - Teddy Nanta">
-            <span class="font-black ms-3">HIS PPOB - Teddy Nanta</span>
-          </a>
+          <div class="flex shrink-0 items-center">
+            <a href="/dashboard" class="flex flex-row items-center">
+              <img class="h-8 w-auto" src="<?= base_url('/images/logo.png') ?>" alt="HIS PPOB - Teddy Nanta">
+              <span class="font-black ms-3">HIS PPOB - Teddy Nanta</span>
+            </a>
+          </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex align-self-end space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href="/topup" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-red-500 hover:text-white">Top Up</a>
+              <a href="#" class="rounded-md bg-red-500 px-3 py-2 text-sm font-medium text-white hover:bg-red-600 hover:text-white">Top Up</a>
               <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-red-500 hover:text-white">Transaksi</a>
               <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-red-500 hover:text-white">Akun</a>
             </div>
@@ -69,21 +71,40 @@ $photo = $photo[4];
         </div>
       </div>
     </div>
-    <div class="flex justify-center px-2 sm:px-6 lg:px-14 max-w-7xl mt-10">
-      <?php foreach ($services as $service) : ?>
-        <div class="flex flex-col items-center m-2">
-          <img class="h-12 w-12 object-contain" src="<?= $service['service_icon'] ?>" alt="<?= $service['service_name'] ?>">
-          <p class="text-center text-sm mt-2"><?= $service['service_name'] ?></p>
+    <h1 class="mt-10">Silahkan masukkan <br> <span class="text-black font-bold text-xl">Nominal Top Up</span></h1>
+    <div class="flex flex-row mt-5">
+      <div class="w-3/5 me-5">
+        <form action="/topup" method="post">
+          <?= csrf_field() ?>
+          <div>
+            <div class="relative mt-2">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <?php renderIcon('mail', 'form-icon w-4 h-4 text-gray-900 dark:text-gray-400'); ?>
+              </div>
+              <input
+                type="number"
+                name="amount"
+                id="amount"
+                required
+                min="10000"
+                value="<?= old('amount') ?>"
+                class="form-input border <?= isset($errors['amount']) ? 'border-red-500' : 'border-gray-300' ?> block w-full rounded-md bg-white ps-9 px-3 py-2 text-base text-gray-900 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600 sm:text-sm"
+                placeholder="nominal top up minimal Rp. 10.000 maksimal Rp. 1.000.000">
+            </div>
+            <?php if (isset($errors['amount'])): ?>
+              <small class="text-red-600"><?= esc($errors['amount']) ?></small>
+            <?php endif; ?>
+          </div>
+          <div>
+            <button type="submit" class=" mt-4 flex w-full justify-center rounded-md bg-gray-300 cursor-not-allowed px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs">Top Up</button>
+          </div>
+        </form>
+      </div>
+      <div class="w-2/5 ms-5">
+        <div class="w-full bg-red-500 rounded-3xl px-10 py-5 text-white">
+          ss
         </div>
-      <?php endforeach; ?>
-    </div>
-    <h2 class="mt-6 font-bold">Temukan promo menarik</h2>
-    <div class="flex justify-center px-2 sm:px-6 lg:px-14 max-w-7xl mt-3">
-      <?php foreach ($banners as $banner) : ?>
-        <div class="flex flex-col items-center m-2">
-          <img class="h-full w-full object-contain" src="<?= $banner['banner_image'] ?>" alt="<?= $banner['banner_name'] ?>">
-        </div>
-      <?php endforeach; ?>
+      </div>
     </div>
   </div>
   <form action="<?= site_url('logout') ?>" method="post">
