@@ -17,57 +17,7 @@ const messageModal = document.getElementById('messageModal');
 const closeMessageButton = document.getElementById('closeMessageButton');
 const cancelButton = document.getElementById('cancelButton');
 const confirmButton = document.getElementById('confirmButton');
-
-console.log("DOM fully loaded");
-// Function to show Success/Error Message
-function showMessageModal(title, message, type = 'success') {
-  console.log('show called');
-  const messageTitle = document.getElementById('messageTitle');
-  const messageBody = document.getElementById('messageBody');
-
-  // Set the modal content
-  messageTitle.textContent = title;
-  messageBody.textContent = message;
-
-  // Optionally, change the modal color based on the type
-  // if (type === 'success') {
-  //   messageModal.classList.remove('bg-red-500');
-  //   messageModal.classList.add('bg-green-500');
-  // } else {
-  //   messageModal.classList.remove('bg-green-500');
-  //   messageModal.classList.add('bg-red-500');
-  // }
-
-  // Show the modal
-  messageModal.classList.remove('hidden');
-}
-// Close Success/Error Message Modal
-closeMessageButton.addEventListener('click', function() {
-  messageModal.classList.add('hidden');
-});
-// const topUpButton = document.getElementById('topUpButton');
-
-// Show Confirmation Modal when Top Up button is clicked
-// topUpButton.addEventListener('click', function(event) {
-//   event.preventDefault(); // Prevent form submission initially
-//   confirmationModal.classList.remove('hidden');
-// });
-
-// Confirm Payment
-// confirmButton.addEventListener('click', function() {
-//   // Proceed with form submission or top up action
-//   document.getElementById('topUpForm').submit(); // Submit the form if confirmed
-//   confirmationModal.classList.add('hidden'); // Close the confirmation modal
-// });
-
-// // Cancel Payment
-// cancelButton.addEventListener('click', function() {
-//   confirmationModal.classList.add('hidden'); // Close the confirmation modal
-// });
-document.getElementById('showMessageButton').addEventListener('click', function() {
-  showMessageModal('Hello', 'This is a test modal');
-});
-
+const amountConfirm = document.getElementById('amountConfirm');
 
 document.querySelectorAll('.form-input').forEach(input => {
   const icon = input.parentElement.querySelector('.form-icon');
@@ -82,6 +32,49 @@ document.querySelectorAll('.form-input').forEach(input => {
     }
   })
 })
+// console.log("DOM fully loaded");
+// Function to show Success/Error Message
+function showMessageModal(title, message, type = 'success') {
+  console.log('show called');
+  const messageTitle = document.getElementById('messageTitle');
+  const messageBody = document.getElementById('messageBody');
+  const messageType = document.getElementById('modalType');
+
+  // Set the modal content
+  messageTitle.textContent = title;
+  messageBody.textContent = message;
+
+  // Optionally, change the modal color based on the type
+  if (type === 'success') {
+    messageType.src = '/images/success.png';
+  } else {
+    messageType.src = '/images/fail.png';
+  }
+
+  // Show the modal
+  messageModal.classList.remove('hidden');
+}
+// Close Success/Error Message Modal
+if (closeMessageButton) {
+  closeMessageButton.addEventListener('click', function() {
+    messageModal.classList.add('hidden');
+  });
+}
+// const topUpButton = document.getElementById('topUpButton');
+
+
+
+// Confirm Payment
+// confirmButton.addEventListener('click', function() {
+//   // Proceed with form submission or top up action
+//   document.getElementById('topUpForm').submit(); // Submit the form if confirmed
+//   confirmationModal.classList.add('hidden'); // Close the confirmation modal
+// });
+
+// // Cancel Payment
+// cancelButton.addEventListener('click', function() {
+//   confirmationModal.classList.add('hidden'); // Close the confirmation modal
+// });
 
 if (amountButtons.length > 0 && amount && topUpButton) {
   amountButtons.forEach(button => {
@@ -89,7 +82,6 @@ if (amountButtons.length > 0 && amount && topUpButton) {
       const value = this.getAttribute('data-value');
       if (value) {
         amount.value = formatter.format(parseInt(value, 10));
-        
         // Update Top Up Button State
         topUpButton.classList.remove('bg-gray-300', 'cursor-not-allowed');
         topUpButton.classList.add('bg-red-500', 'cursor-pointer');
@@ -117,7 +109,16 @@ if (amountButtons.length > 0 && amount && topUpButton) {
       return;
     }
   });
+
+  // Show Confirmation Modal when Top Up button is clicked
+  topUpButton.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission initially
+    
+    confirmationModal.classList.remove('hidden');
+  });
 }
+
+
 
 if (form && amount) {
   form.addEventListener('submit', function (e) {

@@ -7,6 +7,8 @@ $photo = explode('/', $photoUrl);
 $photo = $photo[4];
 
 $errors = session()->getFlashdata('error_validations') ?? [];
+
+$page = 'Top Up';
 ?>
 
 <!DOCTYPE html>
@@ -21,23 +23,29 @@ $errors = session()->getFlashdata('error_validations') ?? [];
 
 <body>
   <!-- Modal for Confirmation Dialog -->
-  <div id="confirmationModal" class="fixed inset-0 flex items-center justify-center z-50 hidden bg-gray-800 bg-opacity-50">
-    <div class="bg-white rounded-lg p-5 w-96">
-      <h2 class="text-xl font-bold">Are you sure you want to pay?</h2>
-      <div class="flex justify-between mt-5">
-        <button id="cancelButton" class="px-5 py-2 bg-gray-500 text-white rounded-md">Cancel</button>
-        <button id="confirmButton" class="px-5 py-2 bg-red-500 text-white rounded-md">Confirm</button>
+  <div id="confirmationModal" class="fixed inset-0 flex items-center hidden bg-gray-900/50 justify-center z-50">
+    <div class="bg-white rounded-lg p-5 w-96 shadow-md">
+      <img id="modalType" src="<?= base_url('/images/logo.png ') ?>" class="mx-auto h-15 w-15" alt="logo">
+      <p class="text-center text-gray-600 text-lg mt-3">Anda yakin untuk Top Up senilai</p>
+      <p id="amountConfirmation" class="text-center font-black text-3xl"></p>
+      <div class="flex flex-col justify-center mt-5">
+        <a id="confirmButton" class="px-5 py-2 text-red-500 text-center font-bold cursor-pointer text-sm rounded-md">Ya Lanjutkan Top Up</a>
+        <a id="cancelButton" class="px-5 py-2 text-center text-gray-300 font-bold cursor-pointer text-sm rounded-md">Batalkan</a>
+        <button id="closeMessageButton" class="px-5 py-2 text-white mt-5 bg-red-500 font-bold cursor-pointer text-sm rounded-md">close</button>
       </div>
     </div>
   </div>
 
   <!-- Modal for Success/Error Message -->
-  <div id="messageModal" class="fixed inset-0 flex items-center bg-gray-900/50 justify-center z-50">
+  <div id="messageModal" class="fixed inset-0 flex items-center hidden bg-gray-900/50 justify-center z-50">
     <div class="bg-white rounded-lg p-5 w-96 shadow-md">
-      <h2 id="messageTitle" class="text-xl font-bold"></h2>
-      <p id="messageBody" class="mt-3"></p>
-      <div class="flex justify-center mt-5">
-        <button id="closeMessageButton" class="px-5 py-2 bg-blue-500 text-white rounded-md">Close</button>
+      <img id="modalType" class="mx-auto h-15 w-15" alt="logo">
+      <p id="messageTitle" class="text-center text-gray-600 text-lg mt-3"></p>
+      <p class="text-center font-black text-3xl">Rp. <?= number_format(old('amount'), 0, '', '.') ?></p>
+      <p id="messageBody" class="text-center text-gray-600 text-lg mt-3"></p>
+      <div class="flex flex-col justify-center mt-5">
+        <a href="/dashboard" class="px-5 py-2 text-red-500 text-center font-bold cursor-pointer text-sm rounded-md">Kembali ke dashboard</a>
+        <button id="closeMessageButton" class="px-5 py-2 text-white mt-5 bg-red-500 font-bold cursor-pointer text-sm rounded-md">close</button>
       </div>
     </div>
   </div>
@@ -64,11 +72,6 @@ $errors = session()->getFlashdata('error_validations') ?? [];
     </div>
   </nav>
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-14 py-5">
-    <?php if (session()->getFlashdata('errors')): ?>
-      <p class="bg-red-200 border border-red-600 py-4 px-3 rounded-lg text-red-700 text-center mb-5"><?= session()->getFlashdata('errors') ?></p>
-    <?php endif; ?>
-
-
     <div class="flex flex-row">
       <div class="w-1/2">
         <img src="<?= $photo == 'null' ? base_url('/images/Profile Photo.png') : $photoUrl ?>" alt="Photo Profile">
@@ -184,7 +187,12 @@ $errors = session()->getFlashdata('error_validations') ?? [];
   <script src="<?= base_url('js/script.js') ?>"></script>
   <?php if (session()->getFlashdata('success')): ?>
     <script>
-      showMessageModal('Success', '<?= session()->getFlashdata('success') ?>', 'success');
+      showMessageModal('<?= $page ?>' + ' senilai', '<?= session()->getFlashdata('success') ?>', 'success');
+    </script>
+  <?php endif; ?>
+  <?php if (session()->getFlashdata('errors')): ?>
+    <script>
+      showMessageModal('<?= $page ?>' + ' senilai', '<?= session()->getFlashdata('errors') ?>', 'error');
     </script>
   <?php endif; ?>
 </body>

@@ -65,9 +65,9 @@ class Dashboard extends BaseController
         $amount = $this->request->getPost();
         try {
             if ($amount['amount'] != 20000) {
-                return redirect()->to('/topup')->with('errors', $amount['amount']);
+                return redirect()->to('/topup')->withInput()->with('errors', $amount['amount']);
             }
-            return redirect()->to('/topup')->with('success', 'Topup berhasil.');
+            return redirect()->to('/topup')->withInput()->with('success', 'berhasil.');
             // $result = $this->dashboardService->topUp($token, $amount['amount']);
             // if ($result['status'] !== 0) {
             //     return redirect()->to('/login')->with('errors', $result['message']);

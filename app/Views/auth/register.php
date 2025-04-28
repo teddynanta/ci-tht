@@ -125,7 +125,7 @@ $errors = session()->getFlashdata('error_validations') ?? [];
             <label for="password_confirmation" class="block text-sm font-medium text-gray-900">Password Confirmation</label>
             <div class="relative mt-2">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                <?php renderIcon('lock', 'form-icon w-4 h-4 text-gray-500 dark:text-gray-400'); ?>
+                <?php renderIcon('lock', 'form-icon w-4 h-4 text-gray-400'); ?>
               </div>
               <input
                 type="password"

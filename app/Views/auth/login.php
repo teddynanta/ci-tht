@@ -31,7 +31,7 @@ $errors = session()->getFlashdata('error_validations') ?? [];
           <?= csrf_field() ?>
           <div>
             <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
-            <div class="relative mt-2">
+            <div class="relative mt-2 form-icon">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                 <?php renderIcon('mail', 'form-icon w-4 h-4 text-gray-400'); ?>
               </div>
@@ -65,7 +65,7 @@ $errors = session()->getFlashdata('error_validations') ?? [];
                 id="password"
                 autocomplete="current-password"
                 required
-                class="fform-input border <?= isset($errors['password']) ? 'border-red-500' : 'border-gray-300' ?> block w-full rounded-md bg-white ps-9 px-3 py-2 text-base text-gray-900 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600 sm:text-sm"
+                class="form-input border <?= isset($errors['password']) ? 'border-red-500' : 'border-gray-300' ?> block w-full rounded-md bg-white ps-9 px-3 py-2 text-base text-gray-900 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600 sm:text-sm"
                 placeholder="masukan password anda">
 
               <!-- Eye Icon -->
